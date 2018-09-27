@@ -11,16 +11,20 @@
 > 2.1
 > 翻译：[100mango](https://github.com/100mango), [magicdict](https://github.com/magicdict)
 > 校对：[shanks](http://codebuild.me)
->
+
 > 2.2
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-12
->
+
 > 3.0
-> 翻译：[Lanford](https://github.com/LanfordCai) 2016-09-19   
+> 翻译：[Lanford](https://github.com/LanfordCai) 2016-09-19
+
 > 3.0.1，shanks，2016-11-12
 
 > 4.0
 > 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
+
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
 
 本页包含内容：
 
@@ -36,9 +40,10 @@
 闭包可以捕获和存储其所在上下文中任意常量和变量的引用。被称为*包裹*常量和变量。 Swift 会为你管理在捕获过程中涉及到的所有内存操作。
 
 > 注意
+> 
 > 如果你不熟悉捕获（capturing）这个概念也不用担心，你可以在[值捕获](#capturing_values)章节对其进行详细了解。
 
-在[函数](./06_Functions.html)章节中介绍的全局和嵌套函数实际上也是特殊的闭包，闭包采取如下三种形式之一：
+在[函数](./06_Functions.md)章节中介绍的全局和嵌套函数实际上也是特殊的闭包，闭包采取如下三种形式之一：
 
 * 全局函数是一个有名字但不会捕获任何值的闭包
 * 嵌套函数是一个有名字并可以捕获其封闭函数域内值的闭包
@@ -54,13 +59,12 @@ Swift 的闭包表达式拥有简洁的风格，并鼓励在常见场景中进�
 <a name="closure_expressions"></a>
 ## 闭包表达式
 
-
-[嵌套函数](./06_Functions.html#nested_function)是一个在较复杂函数中方便进行命名和定义自包含代码模块的方式。当然，有时候编写小巧的没有完整定义和命名的类函数结构也是很有用处的，尤其是在你处理一些函数并需要将另外一些函数作为该函数的参数时。
+[嵌套函数](./06_Functions.md#Nested_Functions)是一个在较复杂函数中方便进行命名和定义自包含代码模块的方式。当然，有时候编写小巧的没有完整定义和命名的类函数结构也是很有用处的，尤其是在你处理一些函数并需要将另外一些函数作为该函数的参数时。
 
 *闭包表达式*是一种利用简洁语法构建内联闭包的方式。闭包表达式提供了一些语法优化，使得撰写闭包变得简单明了。下面闭包表达式的例子通过使用几次迭代展示了 `sorted(by:)` 方法定义和语法优化的方式。每一次迭代都用更简洁的方式描述了相同的功能。
 
 <a name="the_sorted_function"></a>
-### sorted 方法
+### 排序方法
 
 Swift 标准库提供了名为 `sorted(by:)` 的方法，它会根据你所提供的用于排序的闭包函数将已知类型数组中的值进行排序。一旦排序完成，`sorted(by:)` 方法会返回一个与原数组大小相同，包含同类型元素且元素已正确排序的新数组。原数组不会被 `sorted(by:)` 方法修改。
 
@@ -70,7 +74,7 @@ Swift 标准库提供了名为 `sorted(by:)` 的方法，它会根据你所提�
 let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 ```
 
-`sorted(by:)` 方法接受一个闭包，该闭包函数需要传入与数组元素类型相同的两个值，并返回一个布尔类型值来表明当排序结束后传入的第一个参数排在第二个参数前面还是后面。如果第一个参数值出现在第二个参数值*前面*，排序闭包函数需要返回`true`，反之返回`false`。
+`sorted(by:)` 方法接受一个闭包，该闭包函数需要传入与数组元素类型相同的两个值，并返回一个布尔类型值来表明当排序结束后传入的第一个参数排在第二个参数前面还是后面。如果第一个参数值出现在第二个参数值*前面*，排序闭包函数需要返回 `true`，反之返回 `false`。
 
 该例子对一个 `String` 类型的数组进行排序，因此排序闭包函数类型需为 `(String, String) -> Bool`。
 
@@ -94,12 +98,12 @@ var reversedNames = names.sorted(by: backward)
 闭包表达式语法有如下的一般形式：
 
 ```swift
-{ (parameters) -> returnType in
+{ (parameters) -> return type in
     statements
 }
 ```
 
-*闭包表达式参数* 可以是 in-out 参数，但不能设定默认值。也可以使用具名的可变参数（译者注：但是如果可变参数不放在参数列表的最后一位的话，调用闭包的时时编译器将报错。可参考[这里](http://stackoverflow.com/questions/39548852/swift-3-0-closure-expression-what-if-the-variadic-parameters-not-at-the-last-pl)）。元组也可以作为参数和返回值。
+*闭包表达式参数* 可以是 in-out 参数，但不能设定默认值。如果你命名了可变参数，也可以使用此可变参数。元组也可以作为参数和返回值。
 
 下面的例子展示了之前 `backward(_:_:)` 函数对应的闭包表达式版本的代码：
 
@@ -111,7 +115,7 @@ reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in
 
 需要注意的是内联闭包参数和返回值类型声明与 `backward(_:_:)` 函数类型声明相同。在这两种方式中，都写成了 `(s1: String, s2: String) -> Bool`。然而在内联闭包表达式中，函数和返回值类型都写在*大括号内*，而不是大括号外。
 
-闭包的函数体部分由关键字`in`引入。该关键字表示闭包的参数和返回值类型定义已经完成，闭包函数体即将开始。
+闭包的函数体部分由关键字 `in` 引入。该关键字表示闭包的参数和返回值类型定义已经完成，闭包函数体即将开始。
 
 由于这个闭包的函数体部分如此短，以至于可以将其改写成一行代码：
 
@@ -149,13 +153,13 @@ reversedNames = names.sorted(by: { s1, s2 in s1 > s2 } )
 
 Swift 自动为内联闭包提供了参数名称缩写功能，你可以直接通过 `$0`，`$1`，`$2` 来顺序调用闭包的参数，以此类推。
 
-如果你在闭包表达式中使用参数名称缩写，你可以在闭包定义中省略参数列表，并且对应参数名称缩写的类型会通过函数类型进行推断。`in`关键字也同样可以被省略，因为此时闭包表达式完全由闭包函数体构成：
+如果你在闭包表达式中使用参数名称缩写，你可以在闭包定义中省略参数列表，并且对应参数名称缩写的类型会通过函数类型进行推断。`in` 关键字也同样可以被省略，因为此时闭包表达式完全由闭包函数体构成：
 
 ```swift
 reversedNames = names.sorted(by: { $0 > $1 } )
 ```
 
-在这个例子中，`$0`和`$1`表示闭包中第一个和第二个 `String` 类型的参数。
+在这个例子中，`$0` 和 `$1` 表示闭包中第一个和第二个 `String` 类型的参数。
 
 <a name="operator_methods"></a>
 ### 运算符方法
@@ -166,7 +170,7 @@ reversedNames = names.sorted(by: { $0 > $1 } )
 reversedNames = names.sorted(by: >)
 ```
 
-更多关于运算符方法的内容请查看[运算符方法](./25_Advanced_Operators.html#operator_methods)。
+更多关于运算符方法的内容请查看[运算符方法](./26_Advanced_Operators.html#operator_methods)。
 
 <a name="trailing_closures"></a>
 ## 尾随闭包
@@ -205,7 +209,7 @@ reversedNames = names.sorted { $0 > $1 }
 
 当提供给数组的闭包应用于每个数组元素后，`map(_:)` 方法将返回一个新的数组，数组中包含了与原数组中的元素一一对应的映射后的值。
 
-下例介绍了如何在 `map(_:)` 方法中使用尾随闭包将 `Int` 类型数组 `[16, 58, 510]` 转换为包含对应 `String` 类型的值的数组`["OneSix", "FiveEight", "FiveOneZero"]`：
+下例介绍了如何在 `map(_:)` 方法中使用尾随闭包将 `Int` 类型数组 `[16, 58, 510]` 转换为包含对应 `String` 类型的值的数组 `["OneSix", "FiveEight", "FiveOneZero"]`：
 
 ```swift
 let digitNames = [
@@ -240,8 +244,9 @@ let strings = numbers.map {
 
 闭包表达式在每次被调用的时候创建了一个叫做 `output` 的字符串并返回。其使用求余运算符（`number % 10`）计算最后一位数字并利用 `digitNames` 字典获取所映射的字符串。这个闭包能够用于创建任意正整数的字符串表示。
 
-> 注意：  
-> 字典 `digitNames` 下标后跟着一个叹号（`!`），因为字典下标返回一个可选值（optional value），表明该键不存在时会查找失败。在上例中，由于可以确定 `number % 10` 总是 `digitNames` 字典的有效下标，因此叹号可以用于强制解包 (force-unwrap) 存储在下标的可选类型的返回值中的`String`类型的值。
+> 注意
+> 
+> 字典 `digitNames` 下标后跟着一个叹号（`!`），因为字典下标返回一个可选值（optional value），表明该键不存在时会查找失败。在上例中，由于可以确定 `number % 10` 总是 `digitNames` 字典的有效下标，因此叹号可以用于强制解包（force-unwrap）存储在下标的可选类型的返回值中的 `String` 类型的值。
 
 从 `digitNames` 字典中获取的字符串被添加到 `output` 的*前部*，逆序建立了一个字符串版本的数字。（在表达式 `number % 10` 中，如果 `number` 为 `16`，则返回 `6`，`58` 返回 `8`，`510` 返回 `0`。）
 
@@ -289,7 +294,9 @@ func incrementer() -> Int {
 `incrementer()` 函数并没有任何参数，但是在函数体内访问了 `runningTotal` 和 `amount` 变量。这是因为它从外围函数捕获了 `runningTotal` 和 `amount` 变量的*引用*。捕获引用保证了 `runningTotal` 和 `amount` 变量在调用完 `makeIncrementer` 后不会消失，并且保证了在下一次执行 `incrementer` 函数时，`runningTotal` 依旧存在。
 
 > 注意
+> 
 > 为了优化，如果一个值不会被闭包改变，或者在闭包创建后不会改变，Swift 可能会改为捕获并保存一份对值的拷贝。
+> 
 > Swift 也会负责被捕获变量的所有内存管理工作，包括释放不再需要的变量。
 
 下面是一个使用 `makeIncrementer` 的例子：
@@ -324,8 +331,9 @@ incrementByTen()
 // 返回的值为40
 ```
 
-> 注意：   
-> 如果你将闭包赋值给一个类实例的属性，并且该闭包通过访问该实例或其成员而捕获了该实例，你将在闭包和该实例间创建一个循环强引用。Swift 使用捕获列表来打破这种循环强引用。更多信息，请参考[闭包引起的循环强引用](./16_Automatic_Reference_Counting.html#strong_reference_cycles_for_closures)。
+> 注意
+> 
+> 如果你将闭包赋值给一个类实例的属性，并且该闭包通过访问该实例或其成员而捕获了该实例，你将在闭包和该实例间创建一个循环强引用。Swift 使用捕获列表来打破这种循环强引用。更多信息，请参考[闭包引起的循环强引用](./23_Automatic_Reference_Counting.html#strong_reference_cycles_for_closures)。
 
 <a name="closures_are_reference_types"></a>
 ## 闭包是引用类型
@@ -345,7 +353,7 @@ alsoIncrementByTen()
 <a name="escaping_closures"></a>
 ## 逃逸闭包
 
-当一个闭包作为参数传到一个函数中，但是这个闭包在函数返回之后才被执行，我们称该闭包从函数中*逃逸*。当你定义接受闭包作为参数的函数时，你可以在参数名之前标注 `@escaping`，用来指明这个闭包是允许“逃逸”出这个函数的。  
+当一个闭包作为参数传到一个函数中，但是这个闭包在函数返回之后才被执行，我们称该闭包从函数中*逃逸*。当你定义接受闭包作为参数的函数时，你可以在参数名之前标注 `@escaping`，用来指明这个闭包是允许“逃逸”出这个函数的。
 
 一种能使闭包“逃逸”出函数的方法是，将这个闭包保存在一个函数外部定义的变量中。举个例子，很多启动异步操作的函数接受一个闭包参数作为 completion handler。这类函数会在异步操作开始之后立刻返回，但是闭包直到异步操作结束后才会被调用。在这种情况下，闭包需要“逃逸”出函数，因为闭包需要在函数返回之后被调用。例如：
 
@@ -359,7 +367,6 @@ func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
 `someFunctionWithEscapingClosure(_:)` 函数接受一个闭包作为参数，该闭包被添加到一个函数外定义的数组中。如果你不将这个参数标记为 `@escaping`，就会得到一个编译错误。
 
 将一个闭包标记为 `@escaping` 意味着你必须在闭包中显式地引用 `self`。比如说，在下面的代码中，传递到 `someFunctionWithEscapingClosure(_:)` 中的闭包是一个逃逸闭包，这意味着它需要显式地引用 `self`。相对的，传递到 `someFunctionWithNonescapingClosure(_:)` 中的闭包是一个非逃逸闭包，这意味着它可以隐式引用 `self`。
-
 
 ```swift
 func someFunctionWithNonescapingClosure(closure: () -> Void) {
@@ -433,6 +440,7 @@ serve(customer: customersInLine.remove(at: 0))
 ```
 
 > 注意
+> 
 > 过度使用 `autoclosures` 会让你的代码变得难以理解。上下文和函数名应该能够清晰地表明求值是被延迟执行的。
 
 如果你想让一个自动闭包可以“逃逸”，则应该同时使用 `@autoclosure` 和 `@escaping` 属性。`@escaping` 属性的讲解见上面的[逃逸闭包](#escaping_closures)。
@@ -456,4 +464,3 @@ for customerProvider in customerProviders {
 ```
 
 在上面的代码中，`collectCustomerProviders(_:)` 函数并没有调用传入的 `customerProvider` 闭包，而是将闭包追加到了 `customerProviders` 数组中。这个数组定义在函数作用域范围外，这意味着数组内的闭包能够在函数返回之后被调用。因此，`customerProvider` 参数必须允许“逃逸”出函数作用域。
-

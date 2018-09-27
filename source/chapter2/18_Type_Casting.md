@@ -12,11 +12,14 @@
 > 校对：[shanks](http://codebuild.me)，2015-11-01
 > 
 > 2.2
-> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-16  
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-16
 > 3.0.1，shanks，2016-11-13
 
 > 4.0
 > 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
+
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
 
 本页包含内容：
 
@@ -25,15 +28,14 @@
 - [向下转型](#downcasting)
 - [`Any` 和 `AnyObject` 的类型转换](#type_casting_for_any_and_anyobject)
 
-
-_类型转换_ 可以判断实例的类型，也可以将实例看做是其父类或者子类的实例。
+*类型转换*可以判断实例的类型，也可以将实例看做是其父类或者子类的实例。
 
 类型转换在 Swift 中使用 `is` 和 `as` 操作符实现。这两个操作符提供了一种简单达意的方式去检查值的类型或者转换它的类型。
 
-你也可以用它来检查一个类型是否实现了某个协议，就像在[检验协议的一致性](./22_Protocols.html#checking_for_protocol_conformance)部分讲述的一样。
+你也可以用它来检查一个类型是否实现了某个协议，就像在[检验协议的一致性](./21_Protocols.html#checking_for_protocol_conformance)部分讲述的一样。
 
 <a name="defining_a_class_hierarchy_for_type_casting"></a>
-## 定义一个类层次作为例子
+## 为类型转换定义类层次
 
 你可以将类型转换用在类和子类的层次结构上，检查特定类实例的类型并且转换这个类实例的类型成为这个层次结构中的其他类型。下面的三个代码段定义了一个类层次和一个包含了这些类实例的数组，作为类型转换的例子。
 
@@ -86,7 +88,7 @@ let library = [
 <a name="checking_type"></a>
 ## 检查类型
 
-用类型检查操作符（`is`）来检查一个实例是否属于特定子类型。若实例属于那个子类型，类型检查操作符返回 `true`，否则返回 `false`。
+用*类型检查操作符*（`is`）来检查一个实例是否属于特定子类型。若实例属于那个子类型，类型检查操作符返回 `true`，否则返回 `false`。
 
 下面的例子定义了两个变量，`movieCount` 和 `songCount`，用来计算数组 `library` 中 `Movie` 和 `Song` 类型的实例数量：
 
@@ -117,7 +119,7 @@ print("Media library contains \(movieCount) movies and \(songCount) songs")
 
 某类型的一个常量或变量可能在幕后实际上属于一个子类。当确定是这种情况时，你可以尝试向下转到它的子类型，用*类型转换操作符*（`as?` 或 `as!`）。
 
-因为向下转型可能会失败，类型转型操作符带有两种不同形式。条件形式`as?` 返回一个你试图向下转成的类型的可选值。强制形式 `as!` 把试图向下转型和强制解包转换结果结合为一个操作。
+因为向下转型可能会失败，类型转型操作符带有两种不同形式。条件形式 `as?` 返回一个你试图向下转成的类型的可选值。强制形式 `as!` 把试图向下转型和强制解包转换结果结合为一个操作。
 
 当你不确定向下转型可以成功时，用类型转换的条件形式（`as?`）。条件形式的类型转换总是返回一个可选值，并且若下转是不可能的，可选值将是 `nil`。这使你能够检查向下转型是否成功。
 
@@ -154,7 +156,8 @@ for item in library {
 
 若向下转型成功，然后 `movie` 的属性将用于打印一个 `Movie` 实例的描述，包括它的导演的名字 `director`。相似的原理被用来检测 `Song` 实例，当 `Song` 被找到时则打印它的描述（包含 `artist` 的名字）。
 
-> 注意  
+> 注意
+> 
 > 转换没有真的改变实例或它的值。根本的实例保持不变；只是简单地把它作为它被转换成的类型来使用。
 
 <a name="type_casting_for_any_and_anyobject"></a>
@@ -165,7 +168,7 @@ Swift 为不确定类型提供了两种特殊的类型别名：
 * `Any` 可以表示任何类型，包括函数类型。
 * `AnyObject` 可以表示任何类类型的实例。
 
-只有当你确实需要它们的行为和功能时才使用 `Any` 和 `AnyObject`。在你的代码里使用你期望的明确类型总是更好的。
+只有当你确实需要它们的行为和功能时才使用 `Any` 和 `AnyObject`。当你期望你的代码可以工作，最好还是要确定类型。
 
 这里有个示例，使用 `Any` 类型来和混合的不同类型一起工作，包括函数类型和非类类型。它创建了一个可以存储 `Any` 类型的数组 `things`：
 
@@ -182,7 +185,7 @@ things.append(Movie(name: "Ghostbusters", director: "Ivan Reitman"))
 things.append({ (name: String) -> String in "Hello, \(name)" })
 ```
 
-`things` 数组包含两个 `Int` 值，两个 `Double` 值，一个 `String` 值，一个元组 `(Double, Double)`，一个`Movie`实例“Ghostbusters”，以及一个接受 `String` 值并返回另一个 `String` 值的闭包表达式。
+`things` 数组包含两个 `Int` 值，两个 `Double` 值，一个 `String` 值，一个元组 `(Double, Double)`，一个 `Movie` 实例“Ghostbusters”，以及一个接受 `String` 值并返回另一个 `String` 值的闭包表达式。
 
 你可以在 `switch` 表达式的 `case` 中使用 `is` 和 `as` 操作符来找出只知道是 `Any` 或 `AnyObject` 类型的常量或变量的具体类型。下面的示例迭代 `things` 数组中的每一项，并用 `switch` 语句查找每一项的类型。有几个 `switch` 语句的 `case` 绑定它们匹配到的值到一个指定类型的常量，从而可以打印这些值：
 
@@ -205,7 +208,7 @@ for thing in things {
         print("an (x, y) point at \(x), \(y)")
     case let movie as Movie:
         print("a movie called '\(movie.name)', dir. \(movie.director)")
-    case let stringConverter as String -> String:
+    case let stringConverter as (String) -> String:
         print(stringConverter("Michael"))
     default:
         print("something else")
@@ -222,9 +225,12 @@ for thing in things {
 // Hello, Michael
 ```
 
-> 注意   
-> `Any`类型可以表示所有类型的值，包括可选类型。Swift 会在你用`Any`类型来表示一个可选值的时候，给你一个警告。如果你确实想使用`Any`类型来承载可选值，你可以使用`as`操作符显式转换为`Any`，如下所示：
+> 注意
 > 
+> `Any` 类型可以表示所有类型的值，包括可选类型。Swift 会在你用 `Any` 类型来表示一个可选值的时候，给你一个警告。如果你确实想使用 `Any` 类型来承载可选值，你可以使用 `as` 操作符显式转换为 `Any`，如下所示：
+> 
+> 
+
 ```swift
 let optionalNumber: Int? = 3
 things.append(optionalNumber)        // 警告
